@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "82975274575",
+    "firebase_url": "https://dron-18400273-default-rtdb.firebaseio.com",
+    "project_id": "dron-18400273",
+    "storage_bucket": "dron-18400273.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82975274575:android:1a574484a95758fe2c9c3a",
+        "android_client_info": {
+          "package_name": "com.miguel.drone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "82975274575-onhah1dkgh4ag91tc81k80tt6ljc7i1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsSBRMHx87LI8FbYtGBQLhjArULuk_w_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "82975274575-onhah1dkgh4ag91tc81k80tt6ljc7i1r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
