@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp">
+
         <LinearLayout
             android:id="@+id/firstLayout"
             android:layout_width="match_parent"
@@ -25,8 +26,10 @@
                 android:width="150dp"
                 android:height="60dp"
                 android:backgroundTint="@color/naranja"
-                android:textColor="@color/gris"
-                android:text="@string/leer_datos"></Button>
+                android:text="@string/leer_datos"
+                android:onClick="escucharDatosSensores"
+                android:textColor="@color/gris"></Button>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,15 +39,15 @@
                 android:id="@+id/Text_datos_sensores"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:shadowColor="@color/verde"
-                android:textColor="#000000"
                 android:background="@drawable/border"
-                />
+                android:shadowColor="@color/verde"
+                android:padding="15dp"
+                android:textColor="#000000" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/drontransparente"
-                >
+                android:src="@drawable/drontransparente">
 
             </ImageView>
 
@@ -65,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:width="150dp"
                 android:height="60dp"
+                android:onClick="resetear"
                 android:text="@string/resetear"></Button>
         </LinearLayout>
 
@@ -84,6 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:height="60dp"
+                android:onClick="moverPosicionA"
                 android:text="@string/posicion_a"></Button>
 
             <Button
@@ -93,6 +98,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:height="60dp"
+                android:onClick="moverPosicionB"
                 android:text="@string/posicion_b"></Button>
         </LinearLayout>
     </RelativeLayout>

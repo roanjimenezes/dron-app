@@ -8,6 +8,7 @@ import android.Manifest;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseReference configurar_estado;
@@ -38,12 +40,47 @@ public class MainActivity extends AppCompatActivity {
         this.escucharPosicionActual();
     }
 
+    public void escucharDatosSensores(View view) {
+        DatabaseReference sensores = FirebaseDatabase.getInstance().getReference().child("Estatus/Sensores");
+        DatabaseReference sensor_mpu = FirebaseDatabase.getInstance().getReference().child("Estatus/Sensores/MPU-6050");
+        DatabaseReference sensor_ubicacion = FirebaseDatabase.getInstance().getReference().child("Estatus/Sensores/MPU-6050");
+        Toast.makeText(getApplicationContext(), "Leyendo datos de sensores", Toast.LENGTH_SHORT).show();
+        sensor_mpu.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d(snapshot.getKey(), "mpu");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        sensores.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String sensores = "";
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    sensores += data.getKey() + ": " + data.getValue().toString() + "\n";
+                    Log.d(data.getKey(), data.getValue().toString());
+                }
+                datos_sensores.setText(sensores);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void escucharPosicionActual() {
-        configurar_estado = FirebaseDatabase.getInstance().getReference().child("Configuraciones/Estado");
+        configurar_estado = FirebaseDatabase.getInstance().getReference().child("Configuraciones/Estado/Arranque");
         configurar_estado.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                posicionActual = snapshot.getValue().toString();
+                posicionActual = snapshot.getChildren().iterator().next().getValue().toString();
+                Log.d(snapshot.getKey(), posicionActual);
             }
 
             @Override
@@ -63,9 +100,7 @@ public class MainActivity extends AppCompatActivity {
         configurar_estado.updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Posicion actualizada: Posicion 1", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 30);
-                toast.show();
+                Toast.makeText(getApplicationContext(), "Posicion actualizada: Posicion 1", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -80,9 +115,22 @@ public class MainActivity extends AppCompatActivity {
         configurar_estado.updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Posicion actualizada: Posicion 2", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 30);
-                toast.show();
+                Toast.makeText(getApplicationContext(), "Posicion actualizada: Posicion 2", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void resetear(View view) {
+        // ya estamos en la posicion 0 entonces no debemos actualizar
+        if (this.posicionActual == "0") {
+            return;
+        }
+        HashMap hashMap = new HashMap();
+        hashMap.put("Arranque", "0");
+        configurar_estado.updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                Toast.makeText(getApplicationContext(), "Posicion actualizada: Reset", Toast.LENGTH_SHORT).show();
             }
         });
     }
