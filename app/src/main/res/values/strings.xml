@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Drone</string>
+    <string name="resetear">Resetear</string>
+    <string name="posicion_a">Mover a posición 1</string>
+    <string name="posicion_b">Mover a posición 2</string>
+    <string name="leer_datos">Leer datos</string>
+    <string name="datos_sensores">Información de los sensores:</string>
 </resources>

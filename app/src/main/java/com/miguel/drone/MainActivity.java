@@ -8,69 +8,83 @@ import android.Manifest;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
+    DatabaseReference configurar_estado;
+    TextView datos_sensores;
+    String posicionActual = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_item1:
-                        // Action when item 1 is selected
-                        Log.d("TAG", "boton a");
-                        return true;
-                    case R.id.menu_item2:
-                        // Action when item 2 is selected
-                        Log.d("TAG", "boton b");
-                        return true;
-                    case R.id.menu_item3:
-                        // Action when item 3 is selected
-                        Log.d("TAG", "resetear");
-                        return true;
-                }
-                return false;
-            }
-        });
+        datos_sensores = findViewById(R.id.Text_datos_sensores);
         Permisos();
         FirebaseApp.initializeApp(this);
-        Iniciar_firebase(findViewById(R.id.bottom_navigation_view));
+        this.escucharPosicionActual();
     }
 
-    public void Iniciar_firebase(View view) {
-        DatabaseReference rfBtn = FirebaseDatabase.getInstance().getReference().child("Configuraciones/Estado");
-        String V = "1";
+    private void escucharPosicionActual() {
+        configurar_estado = FirebaseDatabase.getInstance().getReference().child("Configuraciones/Estado");
+        configurar_estado.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                posicionActual = snapshot.getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                posicionActual = "0";
+            }
+        });
+    }
+
+    public void moverPosicionA(View view) {
+        // ya estamos en la posicion 1 entonces no debemos actualizar
+        if (this.posicionActual == "1") {
+            return;
+        }
         HashMap hashMap = new HashMap();
-        hashMap.put("Arranque", V);
-        rfBtn.updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+        hashMap.put("Arranque", "1");
+        configurar_estado.updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
             @Override
             public void onSuccess(Object o) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Virtual Button ON", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Posicion actualizada: Posicion 1", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 30);
                 toast.show();
             }
         });
+    }
 
+    public void moverPosicionB(View view) {
+        // ya estamos en la posicion 2 entonces no debemos actualizar
+        if (this.posicionActual == "2") {
+            return;
+        }
+        HashMap hashMap = new HashMap();
+        hashMap.put("Arranque", "2");
+        configurar_estado.updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Posicion actualizada: Posicion 2", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 30);
+                toast.show();
+            }
+        });
     }
 
     private void Permisos() {

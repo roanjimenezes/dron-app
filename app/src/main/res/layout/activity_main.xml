@@ -4,46 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ECECEC"
     tools:context=".MainActivity">
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ECECEC"
-        android:gravity="bottom"
-        android:orientation="vertical">
+        android:padding="15dp">
+        <LinearLayout
+            android:id="@+id/firstLayout"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingHorizontal="15dp">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
+            <Button
+                android:id="@+id/Btn_leer_Datos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="150dp"
+                android:height="60dp"
+                android:backgroundTint="@color/naranja"
+                android:textColor="@color/gris"
+                android:text="@string/leer_datos"></Button>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/datos_sensores" />
 
+            <TextView
+                android:id="@+id/Text_datos_sensores"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:shadowColor="@color/verde"
+                android:textColor="#000000"
+                android:background="@drawable/border"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/drontransparente"
+                >
+
+            </ImageView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/secondLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            app:menu="@menu/botones" />
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_below="@id/firstLayout"
+            >
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/Btn_resetar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="150dp"
+                android:height="60dp"
+                android:text="@string/resetear"></Button>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:paddingHorizontal="15dp">
-
-        <TextView
-            android:id="@+id/textView2"
+        <LinearLayout
+            android:id="@+id/thirdLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Resultado" />
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_below="@id/secondLayout"
+            >
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="157dp"
-            android:text="Final"
-            android:textColor="#000000" />
+            <Button
+                android:id="@+id/Btn_posicion_a"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:height="60dp"
+                android:text="@string/posicion_a"></Button>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/Btn_posicion_b"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:height="60dp"
+                android:text="@string/posicion_b"></Button>
+        </LinearLayout>
+    </RelativeLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
